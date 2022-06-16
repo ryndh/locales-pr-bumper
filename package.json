@@ -1,0 +1,34 @@
+{
+  "name": "gh-action",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.js --license licenses.txt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryndh/gh-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryndh/gh-action/issues"
+  },
+  "homepage": "https://github.com/ryndh/gh-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.9.0",
+    "@actions/exec": "^1.1.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.34.0",
+    "eslint-config-ry": "https://github.com/ryndh/lint"
+  },
+  "eslintConfig": {
+    "extends": [
+      "eslint-config-ry"
+    ]
+  }
+}

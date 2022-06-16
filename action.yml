@@ -1,0 +1,9 @@
+name: 'Locales-Only PR Version Bump Bot'
+description: 'Greet someone and record the time'
+inputs:
+  files:  # Which files to modify version for.
+    description: 'Files to modify version for'
+    default: 'package.json'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
