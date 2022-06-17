@@ -24,7 +24,8 @@
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",
-    "eslint-config-ry": "https://github.com/ryndh/lint"
+    "eslint-config-ry": "https://github.com/ryndh/lint",
+    "husky": "^8.0.1"
   },
   "eslintConfig": {
     "extends": [

@@ -3431,6 +3431,7 @@ module.exports = require("util");
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
+// Borrowed a bit of logic from here which was quite helpful: https://github.com/pocket-apps/action-update-version/blob/master/src/main.ts
 const path = __nccwpck_require__(17)
 const fs = __nccwpck_require__(147)
 const core = __nccwpck_require__(186)
@@ -3438,12 +3439,18 @@ const exec = __nccwpck_require__(514)
 
 const supportedFiles = ['package.json', 'bower.json']
 
+/* TODOS:
+   - See if we can change the name of the PR's to be something more intuitive, ie:  [Translation] Update {list of short locale codes from files changed, ex: “es, de, lv”}
+   - Make compatible with monorepos
+*/
+
 const run = async () => {
   try {
     const files = core.getInput('files').replace(' ', '').split(',')
 
     if (!files.every((fileName) => supportedFiles.includes(fileName))) {
       core.info('Only supports package.json and bower.json at this time')
+      return
     }
     const root = process.env.GITHUB_WORKSPACE
 
@@ -3457,14 +3464,14 @@ const run = async () => {
     const filesChangedToArray = filesChanged.split('\n').filter(Boolean)
 
     const justLocalesChanges = filesChangedToArray.every((filePath) => {
-      console.log('path', filePath)
+      core.info('path', filePath)
       return filePath.includes('locales')
     })
 
     if (justLocalesChanges) {
       const parser = {
         read: JSON.parse,
-        write: (data) => JSON.stringify(data, null, 2),
+        write: (data) => `${JSON.stringify(data, null, 2)}\n`,
       }
 
       core.info('Updating files version field')
@@ -3474,6 +3481,8 @@ const run = async () => {
 
         const content = parser.read(buffer)
 
+        // Might be a better way to do this.
+        // Will need to be more robust if we ever want it to work with alpha, beta, etc.
         const newVersion = content.version
           .split('.')
           .map((num, i) => {
