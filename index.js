@@ -1,3 +1,4 @@
+// Borrowed a bit of logic from here which was quite helpful: https://github.com/pocket-apps/action-update-version/blob/master/src/main.ts
 const path = require('path')
 const fs = require('fs')
 const core = require('@actions/core')
@@ -43,6 +44,7 @@ const run = async () => {
 
         const newVersion = content.version
           .split('.')
+
           .map((num, i) => {
             if (i !== 2) {
               return num
