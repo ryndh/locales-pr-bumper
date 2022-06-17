@@ -8,7 +8,6 @@ const github = require('@actions/github')
 const supportedFiles = ['package.json', 'bower.json']
 
 /* TODOS:
-   - See if we can change the name of the PR's to be something more intuitive, ie:  [Translation] Update {list of short locale codes from files changed, ex: “es, de, lv”}
    - Make compatible with monorepos
 */
 
