@@ -31,6 +31,14 @@ const run = async () => {
 
     const filesChangedToArray = filesChanged.split('\n').filter(Boolean)
 
+    const languagesChanged = filesChangedToArray.reduce((langs, nextFile) => {
+      const lang = nextFile.match(/(?<=\/)\w{2}(?=\/translation\.json)|(?<=_)\w{2}(?=\.json)/)?.[0]
+      if (lang) {
+        langs.add(lang)
+      }
+      return langs
+    }, new Set())
+
     const justLocalesChanges = filesChangedToArray.every((filePath) => {
       core.info('path', filePath)
       return filePath.includes('locales')
@@ -77,7 +85,7 @@ const run = async () => {
       ])
       await exec.exec('git', ['commit', '-am', `bump version`])
       await exec.exec('git', ['push'])
-      updatePrTitle(newVersion)
+      updatePrTitle(newVersion, languagesChanged)
     } else {
       core.info('Version was bumped or more than locales files have changed')
     }
@@ -86,18 +94,20 @@ const run = async () => {
   }
 }
 
-async function updatePrTitle(version) {
+async function updatePrTitle(version, langs) {
   const token = core.getInput('token', { required: true })
   const pr = github.context.payload.pull_request.number
   const owner = github.context.repo.owner
   const repo = github.context.repo.repo
   const octokit = github.getOctokit(token)
 
+  const langsString = ` (${[...langs]?.join(', ')}),`
+
   const req = {
     owner,
     repo,
     pull_number: pr,
-    title: `[Translations] Update translations, bump to version ${version}`,
+    title: `[Translations] Update translations${langs ? langsString : ','} bump to version ${version}`,
     body: '',
   }
 
