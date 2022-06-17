@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 const core = require('@actions/core')
 const exec = require('@actions/exec')
+const github = require('@actions/github')
 
 const supportedFiles = ['package.json', 'bower.json']
 
@@ -42,6 +43,7 @@ const run = async () => {
       }
 
       core.info('Updating files version field')
+      let newVersion
       files.forEach((file) => {
         const dir = path.join(root, file)
         const buffer = fs.readFileSync(dir, 'utf-8')
@@ -50,7 +52,7 @@ const run = async () => {
 
         // Might be a better way to do this.
         // Will need to be more robust if we ever want it to work with alpha, beta, etc.
-        const newVersion = content.version
+        newVersion = content.version
           .split('.')
           .map((num, i) => {
             if (i !== 2) {
@@ -75,12 +77,31 @@ const run = async () => {
       ])
       await exec.exec('git', ['commit', '-am', `bump version`])
       await exec.exec('git', ['push'])
+      updatePrTitle(newVersion)
     } else {
       core.info('Version was bumped or more than locales files have changed')
     }
   } catch (error) {
     core.setFailed(error.message)
   }
+}
+
+async function updatePrTitle(version) {
+  const token = core.getInput('token', { required: true })
+  const pr = github.context.payload.pull_request.number
+  const owner = github.context.repo.owner
+  const repo = github.context.repo.repo
+  const octokit = github.getOctokit(token)
+
+  const req = {
+    owner,
+    repo,
+    pull_number: pr,
+    title: `[Translations] Update translations, bump to version ${version}`,
+    body: '',
+  }
+
+  await octokit.rest.pulls.update(req)
 }
 
 run()

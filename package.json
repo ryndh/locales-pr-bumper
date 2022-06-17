@@ -20,7 +20,8 @@
   "homepage": "https://github.com/ryndh/gh-action#readme",
   "dependencies": {
     "@actions/core": "^1.9.0",
-    "@actions/exec": "^1.1.1"
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^5.0.3"
   },
   "devDependencies": {
     "@vercel/ncc": "^0.34.0",

@@ -4,6 +4,9 @@ inputs:
   files:  # Which files to modify version for.
     description: 'Files to modify version for'
     default: 'package.json'
+  token:
+    description: 'GH token to update PR with'
+    required: true
 runs:
   using: 'node16'
   main: 'dist/index.js'
