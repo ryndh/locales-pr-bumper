@@ -10323,7 +10323,8 @@ const run = async () => {
     }, new Set())
 
     const justLocalesChanges = filesChangedToArray.every((filePath) => {
-      core.info('path', filePath)
+      const cleanedUpPath = filePath?.split('toplevel`')?.[1] || ''
+      core.info(`file: ${cleanedUpPath}`)
       return filePath.includes('locales')
     })
 
