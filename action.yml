@@ -6,7 +6,7 @@ inputs:
     default: 'package.json'
   token:
     description: 'GH token to update PR with'
-    required: true
+    default: ${{ github.token }}
 runs:
   using: 'node16'
   main: 'dist/index.js'
