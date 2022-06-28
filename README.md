@@ -19,16 +19,16 @@ However, running this check as a GitHub Action triggers fast enough that the ini
 
 1. If necessary, create a `.github/workflows/` directory in your repository.
 2. Add a `.yml` file with the following contents as a base (we prefer to call it `auto-bumper.yml`):
-    
+
 ```
 name: Locales-Only PR Auto-Bumper
 
 on:
   pull_request:
     types: ['opened', 'reopened', 'ready_for_review', 'review_requested']
-    paths: 
+    paths:
       - '**/locales/**'
-    branches: 
+    branches:
       - main
       - master
 jobs:
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0  
+          fetch-depth: 0
       - uses: ryndh/locales-pr-bumper@v1.0
         with:
           files: 'package.json, bower.json'
@@ -61,7 +61,6 @@ The above simple configuration tries to be intelligent:
 - How do we feel about auto-merge, if CI passes?
 - Should we allow developers to choose their own tag to put in the prefix brackets?
 - Should we intelligently detect monorepos or pass in a flag?
-- What exactly can be excluded in the exported package? the original `index.js`?
 
 ## TODO:
 
