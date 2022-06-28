@@ -2,7 +2,7 @@
 
 <details open>
 <summary></summary>
-![Movie quote from GoldenEye: "Use the bumper! That's what it's for"](bumper.gif)
+<img style='width: 400px' src="bumper.gif" alt="Movie quote from GoldenEye: Use the bumper! That's what it's for"></img>
 </details>
 
 ### Purpose:
