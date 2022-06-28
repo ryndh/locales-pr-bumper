@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "ncc build index.js --license licenses.txt",
-    "updateTag": "git tag -d  v1.0 && git push --delete origin v1.0 && git tag -a -m 'Make a 1.0' v1.0 && git push --follow-tags"
+    "updateTag": "git tag -d v1.0 && git push --delete origin v1.0 && git tag -a -m 'Make a 1.0' v1.0 && git push --follow-tags",
+    "updateTestTag": "git tag -d v1.1 && git push --delete origin v1.1 && git tag -a -m 'Test Tag' v1.1 && git push --follow-tags"
   },
   "repository": {
     "type": "git",
