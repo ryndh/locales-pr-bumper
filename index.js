@@ -107,7 +107,7 @@ async function updatePrTitle(langs) {
     owner,
     repo,
     pull_number: pr,
-    title: `[Translations] Update translations${langs ? langsString : ''}`,
+    title: `[Translation] Release ${version} for: ${langs ? langsString : ''}`,
     body: '',
   }
 

@@ -1,9 +1,9 @@
-name: 'Locales-Only PR Version Bump Bot'
-description: 'Greet someone and record the time'
+name: 'Auto-Bumper Bot'
+description: 'If all changes for a pull request are within a specified directory, automatically increment associated versions.'
 inputs:
-  files:  # Which files to modify version for.
-    description: 'Files to modify version for'
-    default: 'package.json'
+  files:  # Comma-separated list of files to modify version for.
+    description: 'Files to bump versions for'
+    default: 'package.json' # Supported: package.json, bower.json
   token:
     description: 'GH token to update PR with'
     default: ${{ github.token }}

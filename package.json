@@ -1,7 +1,7 @@
 {
-  "name": "gh-action",
+  "name": "gh-action-auto-bumper",
   "version": "1.0.0",
-  "description": "",
+  "description": "If all changes for a pull request are contained within a specified directory match, automatically increment the associated versions and immediately push the change to the pull request",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
