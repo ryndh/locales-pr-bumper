@@ -10336,15 +10336,15 @@ const run = async () => {
 
       core.info('Updating files version field')
 
+      let newVersion
       files.forEach((file) => {
         const dir = path.join(root, file)
         const buffer = fs.readFileSync(dir, 'utf-8')
 
         const content = parser.read(buffer)
-
         // Might be a better way to do this.
         // Will need to be more robust if we ever want it to work with alpha, beta, etc.
-        const newVersion = content.version
+        newVersion = content.version
           .split('.')
           .map((num, i) => {
             if (i !== 2) {
@@ -10369,7 +10369,7 @@ const run = async () => {
       ])
       await exec.exec('git', ['commit', '-am', `bump version`])
       await exec.exec('git', ['push'])
-      updatePrTitle(languagesChanged)
+      updatePrTitle(languagesChanged, newVersion)
     } else {
       core.info('Version was bumped or more than locales files have changed')
     }
@@ -10378,7 +10378,7 @@ const run = async () => {
   }
 }
 
-async function updatePrTitle(langs) {
+async function updatePrTitle(langs, version) {
   const token = core.getInput('token', { required: true })
   const pr = github.context.payload.pull_request.number
   const owner = github.context.repo.owner
@@ -10391,7 +10391,7 @@ async function updatePrTitle(langs) {
     owner,
     repo,
     pull_number: pr,
-    title: `[Translations] Update translations${langs ? langsString : ''}`,
+    title: `[Translation] Release ${version} for: ${langs ? langsString : ''}`,
     body: '',
   }
 
