@@ -64,7 +64,7 @@ The above simple configuration tries to be intelligent:
 
 ## TODO:
 
-- Add monorepo support to only modify the _closest_ package file, update the pull request title to not includ a specific release version, and to append the package name and version to the pull request description. Ex:
+- Add monorepo support to only modify each _closest_ package file to a change, update the pull request title to not include a specific release version, and to append the package name and version to the pull request description. Ex:
 
 ```
 - conclusion: 1.2.3
