@@ -10392,7 +10392,6 @@ async function updatePrTitle(langs, version) {
     repo,
     pull_number: pr,
     title: `[Translation] Release ${version} for: ${langs ? langsString : ''}`,
-    body: '',
   }
 
   await octokit.rest.pulls.update(req)
